@@ -1278,7 +1278,7 @@ function loadDatesFromAPI() {
         return;
     }
 
-    fetch(`${APPS_SCRIPT_URL}?program=${encodeURIComponent(selectedProgram.name)}`)
+    fetch(`${APPS_SCRIPT_URL}?program=${encodeURIComponent(selectedProgram.shortName)}`)
         .then(res => res.json())
         .then(data => {
             if (data.error) { alert('Error loading dates: ' + data.error); return; }
@@ -1417,10 +1417,11 @@ function submitForm(e) {
 
     fetch(APPS_SCRIPT_URL, {
         method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify({
             parentName, email, phone,
             childFirstName: childFirst, childLastName: childLast, childDOB,
-            program: selectedProgram.name,
+            program: selectedProgram.shortName,
             classDay: selectedDay, classTime: selectedTimeSlot.time,
             bookingDate: selectedDate
         })
