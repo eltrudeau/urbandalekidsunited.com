@@ -731,9 +731,14 @@
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
-            .hero { grid-template-columns: 1fr; }
-            .hero-left { padding: 40px 30px; }
-            .hero-right { padding: 40px 30px; }
+            .hero { display: flex; flex-direction: column; padding: 40px 30px; gap: 0; }
+            .hero-left, .hero-right { display: contents; }
+            .opening-banner { order: 1; }
+            .hero-headline { order: 2; }
+            .hero-subhead { order: 3; }
+            .cta-card { order: 4; width: 100%; max-width: 480px; margin: 24px auto 0; }
+            .map-container { order: 5; margin-top: 32px; }
+            .address-line { order: 6; }
             .results-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
             .form-card { padding: 32px 24px 28px; }
@@ -803,7 +808,7 @@
 
             <div class="form-group">
                 <label for="dobInput">Child's Date of Birth</label>
-                <input type="date" id="dobInput" placeholder="MM/DD/YYYY">
+                <input type="text" id="dobInput" placeholder="MM/DD/YYYY" inputmode="numeric" maxlength="10" autocomplete="off">
             </div>
 
             <button class="btn-primary" onclick="matchProgram()">See Programs & Classes</button>
@@ -832,7 +837,7 @@
         </div>
 
         <div style="text-align: center;">
-            <h3 style="font-family: 'Quicksand', sans-serif; font-size: 22px; margin: 40px 0 24px; color: #333;">
+            <h3 id="classTimeHeading" style="font-family: 'Quicksand', sans-serif; font-size: 22px; margin: 40px 0 24px; color: #333;">
                 Now Pick a Class <span style="color: #96C93D;">Time</span>
             </h3>
         </div>
@@ -1165,7 +1170,7 @@ function matchProgram() {
         return;
     }
 
-    const dob = new Date(dobVal + 'T00:00:00');
+    const dob = (function(){ var p=dobVal.split('/'); return new Date(p[2]+'-'+p[0]+'-'+p[1]+'T00:00:00'); })();
     const age = calculateAge(dob);
     const prog = getProgram(age);
 
@@ -1299,7 +1304,7 @@ function proceedToBooking() {
 function goBackToResults() {
     document.getElementById('bookingSection').classList.remove('visible');
     document.getElementById('stepDate').classList.remove('visible');
-    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('classTimeHeading').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ==================== DATE LOADING ====================
@@ -1506,6 +1511,19 @@ function showConfirmation(childFirst, childLast, email) {
     sec.classList.add('visible');
     setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 }
+
+        // Auto-format DOB input as MM/DD/YYYY
+        document.getElementById('dobInput').addEventListener('input', function(e) {
+            var v = e.target.value.replace(/\D/g, '');
+            if (v.length > 8) v = v.substring(0, 8);
+            if (v.length >= 5) {
+                v = v.substring(0,2) + '/' + v.substring(2,4) + '/' + v.substring(4);
+            } else if (v.length >= 3) {
+                v = v.substring(0,2) + '/' + v.substring(2);
+            }
+            e.target.value = v;
+        });
+
 </script>
 
 </body>
