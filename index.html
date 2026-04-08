@@ -254,7 +254,14 @@
         .results-inner {
             max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
         }
+        .results-inner .results-header { order: 1; }
+        .results-inner #classTimeHeading { order: 2; margin-top: 8px; }
+        .results-inner .form-group { order: 3; }
+        .results-inner > .btn-primary { order: 4; }
+        .results-inner .results-grid { order: 5; }
         .results-header {
             text-align: center;
             margin-bottom: 40px;
@@ -1304,7 +1311,7 @@ function proceedToBooking() {
 function goBackToResults() {
     document.getElementById('bookingSection').classList.remove('visible');
     document.getElementById('stepDate').classList.remove('visible');
-    document.getElementById('classTimeHeading').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ==================== DATE LOADING ====================
