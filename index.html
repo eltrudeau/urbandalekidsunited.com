@@ -164,12 +164,39 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #2E7D32 0%, #43A047 45%, #66BB6A 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-image-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 45%);
+            pointer-events: none;
+        }
+        .hero-image-container .hero-fallback-text {
+            position: relative;
+            z-index: 1;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            padding: 0 16px;
         }
         .hero-image-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center top;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-image-container img[data-loaded="false"] {
+            display: none;
         }
         .address-line {
             display: flex;
@@ -891,7 +918,8 @@
 
         <!-- Hero image replacing map -->
         <div class="hero-image-container">
-            <img src="hero-kids.jpg" alt="KidsUnited players in class">
+            <span class="hero-fallback-text">Happy Kids. Real Skills. Indoor Soccer in Urbandale.</span>
+            <img src="hero-kids.jpg" alt="KidsUnited players in class" onerror="this.setAttribute('data-loaded','false')">
         </div>
         <div class="address-line">3839 121st St, Urbandale, IA</div>
     </div>
