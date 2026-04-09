@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kids United Urbandale - Book a Free Trial Class</title>
+    <title>Kids United Urbandale - Reserve Your Child's Spot</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -29,10 +29,6 @@
             align-items: center;
             gap: 16px;
         }
-        .header-logo-img {
-            height: 48px;
-            width: auto;
-        }
         .header-logo-text {
             font-family: 'Quicksand', sans-serif;
             font-size: 28px;
@@ -40,26 +36,30 @@
             letter-spacing: 1.5px;
             display: flex;
             align-items: baseline;
-            gap: 8px;
+            gap: 0;
         }
-        .header-logo-text .kids { color: #4D4D4D; font-weight: 800; }
-        .header-logo-text .united { color: #888; font-weight: 600; }
+        .header-logo-text .kids { color: #54565A; font-weight: 800; }
+        .header-logo-text .united { color: #9EA1A2; font-weight: 700; }
         .header-logo-text .urbandale {
-            color: #96C93D;
-            font-size: 16px;
+            color: #94D600;
+            font-size: 14px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-left: 4px;
+            margin-left: 12px;
         }
-        .header-phone {
+        .header-tagline {
             margin-left: auto;
-            font-size: 14px;
-            color: #666;
-            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #9EA1A2;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
+        .header-tagline span { color: #94D600; }
 
-        /* ============ HERO — SPLIT SCREEN ============ */
+        /* ============ HERO â SPLIT SCREEN ============ */
         .hero {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -67,7 +67,7 @@
             background: white;
         }
 
-        /* LEFT SIDE — location + map */
+        /* LEFT SIDE â location + map */
         .hero-left {
             position: relative;
             display: flex;
@@ -81,18 +81,20 @@
             content: "";
             position: absolute;
             width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(150,201,61,0.06) 1px, transparent 1px);
+            background: radial-gradient(circle, rgba(148,214,0,0.06) 1px, transparent 1px);
             background-size: 30px 30px;
             top: -100px; right: -150px;
             pointer-events: none;
         }
+
+        /* CHANGE 1: Urgency banner â Vivid Green with black text */
         .opening-banner {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #96C93D;
-            color: white;
-            font-size: 15px;
+            background: #94D600;
+            color: #000000;
+            font-size: 14px;
             font-weight: 800;
             padding: 10px 24px;
             border-radius: 50px;
@@ -100,8 +102,14 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             width: fit-content;
-            box-shadow: 0 4px 12px rgba(150,201,61,0.3);
+            box-shadow: 0 4px 12px rgba(148,214,0,0.35);
+            animation: urgencyPulse 2s ease-in-out infinite;
         }
+        @keyframes urgencyPulse {
+            0%, 100% { box-shadow: 0 4px 12px rgba(148,214,0,0.35); }
+            50% { box-shadow: 0 4px 20px rgba(148,214,0,0.5), 0 0 0 6px rgba(148,214,0,0.12); }
+        }
+
         .hero-headline {
             font-family: 'Quicksand', sans-serif;
             font-size: 40px;
@@ -110,22 +118,59 @@
             line-height: 1.25;
             margin-bottom: 12px;
         }
-        .hero-headline .accent { color: #96C93D; }
+        .hero-headline .accent { color: #94D600; }
         .hero-subhead {
             font-size: 18px;
             color: #666;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             line-height: 1.6;
         }
-        .map-container {
+
+        /* CHANGE 4: Trust signal icons row */
+        .trust-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+            flex-wrap: wrap; /* CHANGE 7: mobile wrap */
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #555;
+        }
+        .trust-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(148,214,0,0.12);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .trust-icon svg {
+            width: 18px;
+            height: 18px;
+            color: #6B9C00;
+        }
+
+        .hero-image-container {
             width: 100%;
-            height: 220px;
+            height: 280px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            border: 2px solid #eee;
         }
-        .map-container iframe { width: 100%; height: 100%; border: none; }
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
         .address-line {
             display: flex;
             align-items: center;
@@ -136,7 +181,7 @@
             font-weight: 600;
         }
 
-        /* RIGHT SIDE — booking CTA */
+        /* RIGHT SIDE â booking CTA */
         .hero-right {
             display: flex;
             flex-direction: column;
@@ -145,6 +190,8 @@
             padding: 50px 60px 50px 50px;
             background: white;
         }
+
+        /* CHANGE 6: Enhanced CTA card */
         .cta-card {
             width: 100%;
             max-width: 440px;
@@ -162,13 +209,34 @@
             margin-bottom: 6px;
             text-align: center;
         }
-        .cta-card h2 .green { color: #96C93D; }
+        .cta-card h2 .green { color: #94D600; }
         .cta-card .cta-sub {
             text-align: center;
             color: #888;
             font-size: 14px;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
         }
+
+        /* CTA checkmarks list */
+        .cta-checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px 0;
+        }
+        .cta-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #555;
+            padding: 6px 0;
+            font-weight: 600;
+        }
+        .cta-checklist li svg {
+            flex-shrink: 0;
+            color: #94D600;
+        }
+
         .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block;
@@ -191,14 +259,14 @@
             color: #333;
         }
         .form-group input:focus, .form-group select:focus {
-            border-color: #96C93D;
+            border-color: #94D600;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(150,201,61,0.15);
+            box-shadow: 0 0 0 3px rgba(148,214,0,0.15);
         }
         .btn-primary {
             width: 100%;
             padding: 16px;
-            background: #96C93D;
+            background: #94D600;
             color: white;
             border: none;
             border-radius: 10px;
@@ -209,7 +277,7 @@
             transition: background 0.2s, transform 0.1s;
             letter-spacing: 0.5px;
         }
-        .btn-primary:hover { background: #84b635; transform: translateY(-1px); }
+        .btn-primary:hover { background: #7EB800; transform: translateY(-1px); }
         .btn-primary:active { transform: translateY(0); }
         .btn-primary:disabled {
             background: #ccc;
@@ -244,7 +312,7 @@
             line-height: 1.5;
         }
 
-        /* ============ RESULTS SECTION — SPLIT PROGRAM + VIDEO ============ */
+        /* ============ RESULTS SECTION â SPLIT PROGRAM + VIDEO ============ */
         .results-section {
             display: none;
             background: #f8f9fa;
@@ -254,14 +322,7 @@
         .results-inner {
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
         }
-        .results-inner .results-header { order: 1; }
-        .results-inner #classTimeHeading { order: 2; margin-top: 8px; }
-        .results-inner .form-group { order: 3; }
-        .results-inner > .btn-primary { order: 4; }
-        .results-inner .results-grid { order: 5; }
         .results-header {
             text-align: center;
             margin-bottom: 40px;
@@ -272,7 +333,7 @@
             font-weight: 700;
             color: #333;
         }
-        .results-header h2 .accent { color: #96C93D; }
+        .results-header h2 .accent { color: #94D600; }
         .results-header p { color: #888; margin-top: 8px; font-size: 16px; }
         .results-grid {
             display: grid;
@@ -287,12 +348,12 @@
             border-radius: 16px;
             padding: 36px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            border-left: 5px solid #96C93D;
+            border-left: 5px solid #94D600;
         }
         .program-card .badge {
             display: inline-block;
-            background: rgba(150,201,61,0.12);
-            color: #6d9e1f;
+            background: rgba(148,214,0,0.12);
+            color: #6B9C00;
             font-size: 12px;
             font-weight: 800;
             padding: 4px 12px;
@@ -333,10 +394,10 @@
             line-height: 1.5;
         }
         .program-card li::before, #programCard li::before {
-            content: "✓";
+            content: "\2713";
             position: absolute;
             left: 0;
-            color: #96C93D;
+            color: #94D600;
             font-weight: 800;
             font-size: 16px;
         }
@@ -411,13 +472,13 @@
             text-align: center;
         }
         .day-btn:hover {
-            border-color: #96C93D;
-            background: rgba(150,201,61,0.08);
+            border-color: #94D600;
+            background: rgba(148,214,0,0.08);
         }
         .day-btn.selected {
-            background: #96C93D;
+            background: #94D600;
             color: white;
-            border-color: #96C93D;
+            border-color: #94D600;
         }
 
         /* Step 2: Pick Your Date */
@@ -440,13 +501,13 @@
             color: #333;
         }
         .date-item:hover:not(.unavailable) {
-            border-color: #96C93D;
-            background: rgba(150,201,61,0.08);
+            border-color: #94D600;
+            background: rgba(148,214,0,0.08);
         }
         .date-item.selected {
-            background: #96C93D;
+            background: #94D600;
             color: white;
-            border-color: #96C93D;
+            border-color: #94D600;
         }
         .date-item.unavailable {
             background: #f5f5f5;
@@ -474,7 +535,7 @@
             width: 16px;
             height: 16px;
             border: 3px solid #f0f0f0;
-            border-top: 3px solid #96C93D;
+            border-top: 3px solid #94D600;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-right: 8px;
@@ -484,7 +545,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Step 3: Sign-Up Form — polished card design */
+        /* Step 3: Sign-Up Form â polished card design */
         .form-card {
             max-width: 560px;
             margin: 0 auto;
@@ -516,7 +577,7 @@
             flex-wrap: wrap;
             gap: 8px 20px;
             background: linear-gradient(135deg, #f0f7e4 0%, #e8f5d6 100%);
-            border: 1px solid rgba(150,201,61,0.25);
+            border: 1px solid rgba(148,214,0,0.25);
             border-radius: 10px;
             padding: 14px 20px;
             margin-bottom: 32px;
@@ -527,7 +588,7 @@
             gap: 6px;
             font-size: 13px;
             font-weight: 700;
-            color: #4a7c10;
+            color: #5A8A00;
         }
         .form-summary-bar .summary-item svg {
             flex-shrink: 0;
@@ -535,14 +596,14 @@
         .form-summary-bar .summary-divider {
             width: 1px;
             height: 16px;
-            background: rgba(150,201,61,0.4);
+            background: rgba(148,214,0,0.4);
         }
         .form-section-label {
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: #96C93D;
+            color: #94D600;
             margin-bottom: 16px;
             padding-bottom: 8px;
             border-bottom: 2px solid #f0f0f0;
@@ -593,13 +654,13 @@
             transition: all 0.2s;
         }
         .form-field .input-wrapper input:focus {
-            border-color: #96C93D;
+            border-color: #94D600;
             background: white;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(150,201,61,0.12);
+            box-shadow: 0 0 0 3px rgba(148,214,0,0.12);
         }
-        .form-field .input-wrapper:focus-within svg {
-            color: #96C93D;
+        .form-field .input-wraper:focus-within svg {
+            color: #94D600;
         }
         .field-error {
             color: #d32f2f;
@@ -630,7 +691,7 @@
         }
         .form-trust svg { flex-shrink: 0; }
 
-        /* ============ CONFIRMATION SECTION ============ */
+        /* ============ CONFIRMAZé·N SECTION ============= */
         .confirmation-section {
             display: none;
             background: #f8f9fa;
@@ -649,7 +710,7 @@
         .confirm-icon {
             width: 60px;
             height: 60px;
-            background: rgba(150,201,61,0.15);
+            background: rgba(148,214,0,0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -710,11 +771,11 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-back:hover { border-color: #96C93D; color: #96C93D; }
+        .btn-back:hover { border-color: #94D600; color: #94D600; }
 
         /* ============ FOOTER ============ */
         footer {
-            background: #4D4D4D;
+            background: #54565A;
             color: white;
             padding: 30px;
             text-align: center;
@@ -738,26 +799,24 @@
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
-            .hero { display: flex; flex-direction: column; padding: 40px 30px; gap: 0; }
-            .hero-left, .hero-right { display: contents; }
-            .opening-banner { order: 1; }
-            .hero-headline { order: 2; }
-            .hero-subhead { order: 3; }
-            .cta-card { order: 4; width: 100%; max-width: 480px; margin: 24px auto 0; }
-            .map-container { order: 5; margin-top: 32px; }
-            .address-line { order: 6; }
+            .hero { grid-template-columns: 1fr; }
+            .hero-right { order: -1; padding: 32px 24px 24px; }
+            .hero-left { padding: 32px 24px; }
             .results-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
             .form-card { padding: 32px 24px 28px; }
-            .header-phone { display: none; }
+            .header-tagline { font-size: 16px; letter-spacing: 1px; }
         }
 
         @media (max-width: 640px) {
             .header-logo-text { font-size: 20px; }
             .hero-headline { font-size: 28px; }
             .hero-subhead { font-size: 16px; }
-            .cta-card { padding: 28px 20px; }
+            .hero-right { padding: 24px 16px 16px; }
+            .cta-card { padding: 24px 18px; }
             .cta-card h2 { font-size: 22px; }
+            .cta-checklist { margin: 12px 0; }
+            .cta-checklist li { font-size: 13px; padding: 4px 0; }
             .results-header h2 { font-size: 24px; }
             .program-card { padding: 24px; }
             .day-buttons { grid-template-columns: 1fr; }
@@ -771,43 +830,10 @@
             .form-actions .btn-primary { order: 1; }
             .booking-section { padding: 40px 16px; }
             .confirm-card { padding: 28px 20px; }
+            /* CHANGE 7: trust row wraps on mobile */
+            .trust-row { gap: 16px; }
         }
-    
-        /* Loading skeleton for class time */
-        .skeleton-loader {
-            display: none;
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s ease-in-out infinite;
-            height: 52px;
-            margin-bottom: 8px;
-        }
-        .skeleton-loader .skeleton-text {
-            color: #999;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .skeleton-loader .spinner {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #ddd;
-            border-top-color: #96C93D;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-</style>
+    </style>
 </head>
 <body>
 
@@ -815,10 +841,10 @@
 <header>
     <div class="header-inner">
         <div class="header-logo-text">
-            <span class="kids">KIDSUNITED</span>
+            <span class="kids">KIDS</span><span class="united">UNITED</span>
             <span class="urbandale">Urbandale</span>
         </div>
-        <div class="header-phone">Opening May 8, 2026</div>
+        <div class="header-tagline"><span>Brain.</span> Body. <span>Life.</span> Soccer.</div>
     </div>
 </header>
 
@@ -826,45 +852,114 @@
 <section class="hero" id="heroSection">
     <!-- LEFT -->
     <div class="hero-left">
-        <div class="opening-banner">OPENING MAY 8</div>
+        <!-- Urgency banner (Vivid Green, pulsing) -->
+        <div class="opening-banner">
+            SPOTS FILLING UP &mdash; OPENS MAY 8
+        </div>
+
+        <!-- Headline: experience-focused -->
         <h1 class="hero-headline">
-            Let Your Little One <span class="accent">Score Big.</span>
+            Your Kid's First <span class="accent">Soccer Goal</span> Starts Here.
         </h1>
+
+        <!-- Subhead: mention free once, focus on the experience -->
         <p class="hero-subhead">
-            Register for a free trial class and discover why families love Kids United Urbandale. Learn soccer. Build confidence. Make friends.
+            A 45-minute class where kids ages 1.5&ndash;9 build confidence, learn soccer, and have the time of their lives &mdash; first class is on us.
         </p>
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2981.6371234567!2d-93.65999!3d41.64444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee6a0a0a0a0a0b%3A0x0a0a0a0a0a0a0a0a!2s3839%20121st%20St%2C%20Urbandale%2C%20IA!5e0!3m2!1sen!2sus!4v0000000000000"></iframe>
+
+        <!-- Trust signal icons -->
+        <div class="trust-row">
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                Ages 1.5&ndash;9
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                Indoor facility
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                Try before you commit
+            </div>
+        </div>
+
+        <!-- Hero image replacing map -->
+        <div class="hero-image-container">
+            <img src="hero-kids.jpg" alt="KidsUnited players in class">
         </div>
         <div class="address-line">3839 121st St, Urbandale, IA</div>
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT â CHANGE 6: Enhanced CTA card -->
     <div class="hero-right">
         <div class="cta-card">
-            <h2>Book Your <span class="green">Free Trial</span></h2>
-            <p class="cta-sub">Takes 2 minutes. No commitment.</p>
+            <h2>Claim Your <span class="green">Free Trial</span></h2>
+            <p class="cta-sub">See what your child's first free class looks like.</p>
+
+            <!-- Checkmarks: what you get -->
+            <ul class="cta-checklist">
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    45-minute class matched to your child's age
+                </li>
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    Professional coaches &mdash; max 10&ndash;12 kids per class
+                </li>
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    Zero commitment &mdash; no card, no strings
+                </li>
+            </ul>
 
             <div class="error-msg" id="errorMsg"></div>
             <div class="out-of-range-msg" id="outOfRangeMsg"></div>
 
             <div class="form-group">
                 <label for="dobInput">Child's Date of Birth</label>
-                <input type="text" id="dobInput" placeholder="MM/DD/YYYY" inputmode="numeric" maxlength="10" autocomplete="off">
+                <input type="date" id="dobInput" placeholder="MM/DD/YYYY">
             </div>
 
-            <button class="btn-primary" onclick="matchProgram()">See Programs & Classes</button>
-            <p class="cta-note">We'll match your child to the right program.</p>
+            <button class="btn-primary" onclick="matchProgram()">Book Your Free Trial &mdash;</button>
+            <p class="cta-note">Takes 60 seconds &mdash; spots are limited for opening week.</p>
         </div>
     </div>
 </section>
 
-<!-- ==================== RESULTS SECTION — PROGRAM + VIDEO ==================== -->
+<!-- ==================== RESULTS SECTION â PROGRAM + VIDEO ==================== -->
 <section class="results-section" id="resultsSection">
     <div class="results-inner">
         <div class="results-header">
-            <h2>Perfect! We Have a Program <span class="accent">for Your Child.</span></h2>
+            <h2>Perfect!#We HavEa PHÏGRAM <span class="accent">for Your Child.</span></h2>
             <p id="resultsSubtext"></p>
+        </div>
+
+        <div style="text-align: center;">
+            <h3 style="font-family: 'Quicksand', sans-serif; font-size: 22px; margin: 0 0 24px; color: #333;">
+                Pick a Class <span style="color: #94D600;">Time</span>
+            </h3>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto; padding-bottom: 32px;">
+            <div class="form-group">
+                <label for="classTimeSelect">Which class time works best?</label>
+                <div style="position: relative;">
+                    <select id="classTimeSelect">
+                        <option value="">â Select a class time â</option>
+                    </select>
+                    <div id="classTimeLoader" style="display: none; text-align: center; padding: 16px 0;">
+                        <div class="spinner" style="width: 24px; height: 24px; border-width: 3px; vertical-align: middle;"></div>
+                        <span style="color: #666; font-size: 14px; margin-left: 8px; vertical-align: middle;">Finding available class times&hellip;</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-primary" onclick="proceedToBooking()">Continue to Booking</button>
         </div>
 
         <div class="results-grid">
@@ -877,25 +972,6 @@
                 <div class="video-wrapper" id="videoWrapper"></div>
             </div>
         </div>
-
-        <div style="text-align: center;">
-            <h3 id="classTimeHeading" style="font-family: 'Quicksand', sans-serif; font-size: 22px; margin: 40px 0 24px; color: #333;">
-                Now Pick a Class <span style="color: #96C93D;">Time</span>
-            </h3>
-        </div>
-
-        <div style="max-width: 600px; margin: 0 auto; padding-bottom: 20px;">
-            <div class="form-group">
-                <label for="classTimeSelect">Which class time works best?</label>
-                <select id="classTimeSelect">
-                    <option value="">— Select a class time —</option>
-                </select>
-            
-                <div id="classTimeLoader" class="skeleton-loader">
-                    <div class="skeleton-text"><div class="spinner"></div> Loading available class times...</div>
-                </div></div>
-            <button class="btn-primary" onclick="proceedToBooking()">Continue to Booking</button>
-        </div>
     </div>
 </section>
 
@@ -906,7 +982,7 @@
         <!-- Date Selection -->
         <div class="booking-step visible" id="stepDate">
             <h2 style="font-family: 'Quicksand', sans-serif; font-size: 28px; font-weight: 700; color: #333; margin-bottom: 6px; text-align: center;">
-                Pick Your <span style="color: #96C93D;">Trial Date</span>
+                Pick Your <span style="color: #94D600;">Trial Date</span>
             </h2>
             <p id="dateSubtext" style="text-align: center; color: #666; margin-bottom: 24px;"></p>
             <p style="color: #666; margin-bottom: 20px; text-align: center;">
@@ -1006,7 +1082,7 @@
 
                     <div class="form-actions">
                         <button type="button" class="btn-back" onclick="goBackToDate()">Back</button>
-                        <button type="submit" class="btn-primary" id="submitBtn">Book My Free Trial</button>
+                        <button type="submit" class="btn-primary" id="submitBtn">Reserve My Spot</button>
                     </div>
                 </form>
 
@@ -1022,9 +1098,9 @@
 <!-- ==================== CONFIRMATION SECTION ==================== -->
 <section class="confirmation-section" id="confirmationSection">
     <div class="confirm-card">
-        <div class="confirm-icon">✓</div>
+        <div class="confirm-icon">&check;</div>
         <h2>You're All Set!</h2>
-        <p>Your child's free trial class is booked. We've sent a confirmation email to the address you provided.</p>
+        <p>Your child's first class is booked! We've sent a confirmation email to the address you provided.</p>
 
         <div class="confirm-details" id="confirmDetails"></div>
 
@@ -1043,8 +1119,6 @@
 
 <script>
 // ==================== CONFIGURATION ====================
-// Replace with your deployed Google Apps Script URL
-// CONFIGURE: Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your actual deployed URL
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5Bp1-SJp0_9rNgyod3gfZGzUjdL07ohNZAvayzkODvKkMd43_f_9OFO5lXHpFiHQyCQ/exec';
 
 // ==================== PROGRAM DATA ====================
@@ -1052,14 +1126,14 @@ const programs = {
     kub: {
         name: "KUB (KidsUnited Baby)",
         shortName: "KUB",
-        ageRange: "18 months – 2.5 years",
+        ageRange: "18 months \u2013 2.5 years",
         format: "Parent-Assisted (1 parent on field)",
         maxKids: 10,
         description: "The most unique soccer program in America for our youngest players. Nurture connection, confidence, and curiosity through shared play with a grown-up. Through ball games and group activities, we develop motor skills, sense of balance, and orientation in space.",
         highlights: [
-            "Cognitive Skills — colors, numbers, body parts using the ball",
-            "Body Mastery — balancing, running, hopping, coordination",
-            "Soccer Coordination — dribbling, rolling, throwing, shooting",
+            "Cognitive Skills \u2014 colors, numbers, body parts using the ball",
+            "Body Mastery \u2014 balancing, running, hopping, coordination",
+            "Soccer Coordination \u2014 dribbling, rolling, throwing, shooting",
             "Signature Obstacle Course to finish every class"
         ],
         times: [
@@ -1076,15 +1150,15 @@ const programs = {
     littleChamps: {
         name: "Little Champs",
         shortName: "Little Champs",
-        ageRange: "2.5 – 3.5 years",
+        ageRange: "2.5 \u2013 3.5 years",
         format: "Parent-Assisted (transitioning to independence)",
         maxKids: 10,
-        description: "Our intermediate program bridges the gap between parent-assisted play and full independence. Your role shifts from 'guide' to 'teammate' — supporting them when necessary. The goal is to build independence, discipline, and teamwork.",
+        description: "Our intermediate program bridges the gap between parent-assisted play and full independence. Your role shifts from 'guide' to 'teammate' \u2014 supporting them when necessary. The goal is to build independence, discipline, and teamwork.",
         highlights: [
-            "Building Independence — focus and perseverance",
-            "Soccer Fundamentals — dribbling, shooting, passing with both feet",
-            "Cognitive & Body — counting, matching, coordination, balance",
-            "Life Skills — discipline, teamwork, and focus"
+            "Building Independence \u2014 focus and perseverance",
+            "Soccer Fundamentals \u2014 dribbling, shooting, passing with both feet",
+            "Cognitive & Body \u2014 counting, matching, coordination, balance",
+            "Life Skills \u2014 discipline, teamwork, and focus"
         ],
         times: [
             { day: "Saturday", time: "9:40 AM" },
@@ -1101,15 +1175,15 @@ const programs = {
     drillsSkillsJr: {
         name: "Drills to Skills Junior",
         shortName: "Drills to Skills JR",
-        ageRange: "3.5 – 5 years",
+        ageRange: "3.5 \u2013 5 years",
         format: "Fully Independent (no parents on the field)",
         maxKids: 12,
-        description: "Children are fully independent in class! Focuses on building a strong foundation in Body Mastery,oSoccer Coordination, and Life Skills. Designed to grow working memory, attention span, and confidence.",
+        description: "Children are fully independent in class! Focuses on building a strong foundation in Body Mastery, Soccer Coordination, and Life Skills. Designed to grow working memory, attention span, and confidence.",
         highlights: [
-            "Soccer Coordination — dribbling, passing, shooting with both feet",
-            "Ball Mastery — sole rolls, toe taps, and basic 1v1 scenarios",
-            "Body Mastery — speed, reaction, and balance drills",
-            "Life Skills — leadership, responsibility, stress resistance"
+            "Soccer Coordination \u2014 dribbling, passing, shooting with both feet",
+            "Ball Mastery \u2014 sole rolls, toe taps, and basic 1v1 scenarios",
+            "Body Mastery \u2014 speed, reaction, and balance drills",
+            "Life Skills \u2014 leadership, responsibility, stress resistance"
         ],
         times: [
             { day: "Saturday", time: "11:30 AM" },
@@ -1124,15 +1198,15 @@ const programs = {
     drillsSkills: {
         name: "Drills to Skills",
         shortName: "Drills to Skills",
-        ageRange: "5 – 7 years",
+        ageRange: "5 \u2013 7 years",
         format: "Fully Independent (no parents)",
         maxKids: 12,
         description: "Our cumulative program builds upon the fundamentals with more complex and technical training. We maintain an equal balance between body control, soccer technique, and essential life skills like discipline and perseverance.",
         highlights: [
-            "Advanced Fundamentals — dribbling, passing, shooting with both feet",
-            "Bilateral Coordination — right and left body development",
-            "Perfect Entry Point — great for beginners at this age",
-            "Life Skills — discipline, perseverance, teamwork"
+            "Advanced Fundamentals \u2014 dribbling, passing, shooting with both feet",
+            "Bilateral Coordination \u2014 right and left body development",
+            "Perfect Entry Point \u2014 great for beginners at this age",
+            "Life Skills \u2014 discipline, perseverance, teamwork"
         ],
         times: [
             { day: "Saturday", time: "12:30 PM" },
@@ -1147,15 +1221,15 @@ const programs = {
     drillsSkillsPro: {
         name: "Drills to Skills PRO",
         shortName: "Drills to Skills PRO",
-        ageRange: "7 – 9 years",
+        ageRange: "7 \u2013 9 years",
         format: "Fully Independent (no parents)",
         maxKids: 12,
         description: "Designed to improve technical skills for older players. We incorporate specific skill moves and small-sided games with a strong emphasis on 1v1 situations. Helps them understand the game while building focus, discipline, and teamwork.",
         highlights: [
-            "Technical Instruction — trapping, throwing, skill moves",
-            "Small-Sided Games — 1v1, 2v1, and 2v2 competitive scenarios",
-            "Game Understanding — applying skills in real situations",
-            "Life Skills — perseverance and stress resistance"
+            "Technical Instruction \u2014 trapping, throwing, skill moves",
+            "Small-Sided Games \u2014 1v1, 2v1, and 2v2 competitive scenarios",
+            "Game Understanding \u2014 applying skills in real situations",
+            "Life Skills \u2014 perseverance and stress resistance"
         ],
         times: [
             { day: "Saturday", time: "1:20 PM" },
@@ -1215,7 +1289,7 @@ function matchProgram() {
         return;
     }
 
-    const dob = (function(){ var p=dobVal.split('/'); return new Date(p[2]+'-'+p[0]+'-'+p[1]+'T00:00:00'); })();
+    const dob = new Date(dobVal + 'T00:00:00');
     const age = calculateAge(dob);
     const prog = getProgram(age);
 
@@ -1256,17 +1330,17 @@ function showResults() {
     document.getElementById('resultsSubtext').textContent =
         `Based on your child's age, we recommend ${p.shortName}. Watch the video and pick a class time below!`;
 
-    // Time dropdown — populate after fetching availability so full slots can be hidden
+    // Time dropdown
     const sel = document.getElementById('classTimeSelect');
-    document.getElementById('classTimeLoader').style.display = 'flex';
-        sel.style.display = 'none';
-        sel.innerHTML = '<option value="">Loading available times…</option>';
+    const loader = document.getElementById('classTimeLoader');
+    sel.innerHTML = '<option value="">Loading available times\u2026</option>';
     sel.disabled = true;
+    sel.style.display = 'none';
+    loader.style.display = 'block';
     availabilityData = null;
 
     if (APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-        // Demo mode: show all times
-        sel.innerHTML = '<option value="">— Select a class time —</option>';
+        sel.innerHTML = '<option value="">\u2014 Select a class time \u2014</option>';
         p.times.forEach((t, i) => {
             const opt = document.createElement('option');
             opt.value = i;
@@ -1274,12 +1348,14 @@ function showResults() {
             sel.appendChild(opt);
         });
         sel.disabled = false;
+        sel.style.display = '';
+        loader.style.display = 'none';
     } else {
         fetch(`${APPS_SCRIPT_URL}?program=${encodeURIComponent(p.shortName)}`)
             .then(res => res.json())
             .then(data => {
                 availabilityData = data;
-                sel.innerHTML = '<option value="">— Select a class time —</option>';
+                sel.innerHTML = '<option value="">\u2014 Select a class time \u2014</option>';
                 p.times.forEach((t, i) => {
                     const slotKey = `${t.day}___${t.time}`;
                     const dates = (data.availability || {})[slotKey] || [];
@@ -1292,20 +1368,14 @@ function showResults() {
                     }
                 });
                 if (sel.options.length === 1) {
-                    sel.innerHTML = '<option value="">No times available — check back soon</option>';
+                    sel.innerHTML = '<option value="">No times available \u2014 check back soon</option>';
                 }
                 sel.disabled = false;
-            })
-            
-            .then(() => {
-                document.getElementById('classTimeLoader').style.display = 'none';
-                document.getElementById('classTimeSelect').style.display = '';
+                sel.style.display = '';
+                loader.style.display = 'none';
             })
             .catch(() => {
-                document.getElementById('classTimeLoader').style.display = 'none';
-                document.getElementById('classTimeSelect').style.display = '';
-                // On error, fall back to showing all times
-                sel.innerHTML = '<option value="">— Select a class time —</option>';
+                sel.innerHTML = '<option value="">\u2014 Select a class time \u2014</option>';
                 p.times.forEach((t, i) => {
                     const opt = document.createElement('option');
                     opt.value = i;
@@ -1313,6 +1383,8 @@ function showResults() {
                     sel.appendChild(opt);
                 });
                 sel.disabled = false;
+                sel.style.display = '';
+                loader.style.display = 'none';
             });
     }
 
@@ -1325,7 +1397,7 @@ function showResults() {
     setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 }
 
-// ==================== PROCEED: dropdown → date selection ====================
+// ==================== PROCEED: dropdown -> date selection ====================
 function proceedToBooking() {
     const sel = document.getElementById('classTimeSelect');
     if (!sel.value) {
@@ -1340,11 +1412,9 @@ function proceedToBooking() {
     selectedDay = selectedTimeSlot.day;
     selectedDate = null;
 
-    // Set subtext for date picker
     document.getElementById('dateSubtext').textContent =
         `Showing available ${selectedDay}s at ${selectedTimeSlot.time} for ${selectedProgram.shortName}`;
 
-    // Load dates and show the date section
     loadDatesFromAPI();
 
     const sec = document.getElementById('bookingSection');
@@ -1368,7 +1438,6 @@ function loadDatesFromAPI() {
     document.getElementById('dateList').innerHTML = '';
 
     if (APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-        // Demo mode
         setTimeout(() => {
             const dates = generateDatesLocally(selectedDay);
             displayAvailableDates(dates);
@@ -1378,7 +1447,6 @@ function loadDatesFromAPI() {
         return;
     }
 
-    // Reuse data already fetched when the dropdown was populated
     if (availabilityData) {
         const slotKey = `${selectedDay}___${selectedTimeSlot.time}`;
         displayAvailableDates(availabilityData.availability[slotKey] || []);
@@ -1465,13 +1533,11 @@ function proceedToForm() {
         return;
     }
 
-    // Populate hidden fields
     document.getElementById('childDOB').value = document.getElementById('dobInput').value;
     document.getElementById('formProgram').value = selectedProgram.name;
     document.getElementById('formTime').value = `${selectedDay} at ${selectedTimeSlot.time}`;
     document.getElementById('formDate').value = selectedDate;
 
-    // Populate summary bar
     document.getElementById('summaryProgram').textContent = selectedProgram.shortName;
     document.getElementById('summaryTime').textContent = `${selectedDay}s at ${selectedTimeSlot.time}`;
     document.getElementById('summaryDate').textContent = formatDateHuman(new Date(selectedDate + 'T00:00:00'));
@@ -1519,7 +1585,7 @@ function submitForm(e) {
         setTimeout(() => {
             showConfirmation(childFirst, childLast, email);
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Book My Free Trial';
+            submitBtn.textContent = 'Reserve My Spot';
         }, 1000);
         return;
     }
@@ -1540,13 +1606,13 @@ function submitForm(e) {
         if (data.error) { alert('Booking failed: ' + data.error); }
         else { showConfirmation(childFirst, childLast, email); }
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Book My Free Trial';
+        submitBtn.textContent = 'Reserve My Spot';
     })
     .catch(err => {
         console.error(err);
         alert('Booking failed. Please try again.');
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Book My Free Trial';
+        submitBtn.textContent = 'Reserve My Spot';
     });
 }
 
@@ -1557,7 +1623,7 @@ function showConfirmation(childFirst, childLast, email) {
         <p><strong>Class:</strong> ${selectedDay} at ${selectedTimeSlot.time}</p>
         <p><strong>Date:</strong> ${formatDateHuman(new Date(selectedDate + 'T00:00:00'))}</p>
         <p><strong>Confirmation sent to:</strong> ${email}</p>
-        <p style="margin-top:14px;color:#96C93D;font-weight:800;">See you at 3839 121st St, Urbandale, IA!</p>
+        <p style="margin-top:14px;color:#94D600;font-weight:800;">See you at 3839 121st St, Urbandale, IA!</p>
     `;
 
     document.getElementById('bookingSection').classList.remove('visible');
@@ -1565,19 +1631,6 @@ function showConfirmation(childFirst, childLast, email) {
     sec.classList.add('visible');
     setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 }
-
-        // Auto-format DOB input as MM/DD/YYYY
-        document.getElementById('dobInput').addEventListener('input', function(e) {
-            var v = e.target.value.replace(/\D/g, '');
-            if (v.length > 8) v = v.substring(0, 8);
-            if (v.length >= 5) {
-                v = v.substring(0,2) + '/' + v.substring(2,4) + '/' + v.substring(4);
-            } else if (v.length >= 3) {
-                v = v.substring(0,2) + '/' + v.substring(2);
-            }
-            e.target.value = v;
-        });
-
 </script>
 
 </body>
