@@ -769,6 +769,26 @@
             margin-bottom: 8px;
         }
 
+        /* ============ SLOT GRID (grouped slot picker) ============ */
+        .slot-grid { display: flex; flex-direction: column; gap: 24px; }
+        .slot-day-group { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+        .slot-day-header { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 17px; color: #333; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; display: flex; justify-content: space-between; align-items: baseline; }
+        .slot-day-header .slot-day-count { font-size: 13px; color: #999; font-weight: 500; }
+        .slot-row-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+        .slot-row { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 12px 14px; background: #fafbfc; border: 1.5px solid #e8e8e8; border-radius: 10px; cursor: pointer; transition: all 0.15s; text-align: left; font-family: inherit; }
+        .slot-row:hover:not(.full) { border-color: #94D600; background: #f6fde9; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(148, 214, 0, 0.15); }
+        .slot-row.full { background: #f5f5f5; color: #aaa; cursor: not-allowed; }
+        .slot-row .slot-date { font-weight: 700; font-size: 14px; color: #333; }
+        .slot-row.full .slot-date { color: #999; }
+        .slot-row .slot-time { font-size: 13px; color: #666; }
+        .slot-row .slot-spots { font-size: 12px; font-weight: 600; color: #94D600; }
+        .slot-row.full .slot-spots { color: #c00; }
+        .slot-row.low .slot-spots { color: #f57c00; }
+        .slot-grid .no-slots { text-align: center; color: #999; padding: 40px 20px; font-style: italic; }
+        @media (max-width: 600px) {
+            .slot-row-list { grid-template-columns: 1fr; }
+        }
+
         /* ============ BOOKING SECTION ============ */
         .booking-section {
             display: none;
@@ -969,26 +989,17 @@
         </div>
 
         <div style="text-align: center;">
-            <h3 style="font-family: 'Quicksand', sans-serif; font-size: 22px; margin: 0 0 24px; color: #333;">
-                Pick a Class <span style="color: #94D600;">Time</span>
+            <h3 style="font-family: 'Quicksand', sans-serif; font-size: 22px; margin: 0 0 8px; color: #333;">
+                Pick a <span style="color: #94D600;">Class</span>
             </h3>
+            <p style="text-align: center; color: #666; margin: 0 0 24px; font-size: 14px;">Tap any open slot to reserve.</p>
         </div>
 
-        <div style="max-width: 600px; margin: 0 auto; padding-bottom: 32px;">
-            <div class="form-group">
-                <label for="classTimeSelect">Which class time works best?</label>
-                <div style="position: relative;">
-                    <select id="classTimeSelect">
-                        <option value="">— Select a class time —</option>
-                    </select>
-                    <div id="classTimeLoader" style="display: none; text-align: center; padding: 16px 0;">
-                        <div class="spinner" style="width: 24px; height: 24px; border-width: 3px; vertical-align: middle;"></div>
-                        <span style="color: #666; font-size: 14px; margin-left: 8px; vertical-align: middle;">Finding available class times&hellip;</span>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-primary" onclick="proceedToBooking()">Continue to Booking</button>
+        <div id="slotLoader" style="display: none; text-align: center; padding: 24px 0;">
+            <div class="spinner" style="width: 32px; height: 32px; border-width: 3px; vertical-align: middle;"></div>
+            <span style="color: #666; font-size: 14px; margin-left: 8px; vertical-align: middle;">Loading available classes&hellip;</span>
         </div>
+        <div id="slotGrid" class="slot-grid" style="max-width: 760px; margin: 0 auto 32px;"></div>
 
         <div class="results-grid">
             <!-- LEFT: Program Card -->
@@ -1109,7 +1120,7 @@
                     <input type="hidden" id="formDate">
 
                     <div class="form-actions">
-                        <button type="button" class="btn-back" onclick="goBackToDate()">Back</button>
+                        <button type="button" class="btn-back" onclick="goBackToResults()">Back</button>
                         <button type="submit" class="btn-primary" id="submitBtn">Reserve My Spot</button>
                     </div>
                 </form>
@@ -1393,61 +1404,34 @@ function showResults() {
     document.getElementById('resultsSubtext').textContent =
         `Based on your child's age, we recommend ${p.shortName}. Watch the video and pick a class time below!`;
 
-    // Time dropdown
-    const sel = document.getElementById('classTimeSelect');
-    const loader = document.getElementById('classTimeLoader');
-    sel.innerHTML = '<option value="">Loading available times\u2026</option>';
-    sel.disabled = true;
-    sel.style.display = 'none';
-    loader.style.display = 'block';
+    // Slot grid (grouped flat list)
+    const slotGrid = document.getElementById('slotGrid');
+    const slotLoader = document.getElementById('slotLoader');
+    slotGrid.innerHTML = '';
+    slotLoader.style.display = 'block';
     availabilityData = null;
 
     if (APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-        sel.innerHTML = '<option value="">\u2014 Select a class time \u2014</option>';
-        p.times.forEach((t, i) => {
-            const opt = document.createElement('option');
-            opt.value = i;
-            opt.textContent = `${t.day} at ${t.time}`;
-            sel.appendChild(opt);
+        // Dev fallback: synthesize a few weeks of dates for each slot
+        const fakeAvail = {};
+        p.times.forEach(t => {
+            const key = `${t.day}___${t.time}`;
+            fakeAvail[key] = generateDatesLocally(t.day).map(d => ({...d, spotsRemaining: 5, available: true}));
         });
-        sel.disabled = false;
-        sel.style.display = '';
-        loader.style.display = 'none';
+        slotLoader.style.display = 'none';
+        renderGroupedSlots(p, fakeAvail);
     } else {
         fetch(`${APPS_SCRIPT_URL}?program=${encodeURIComponent(p.shortName)}`)
             .then(res => res.json())
             .then(data => {
                 availabilityData = data;
-                sel.innerHTML = '<option value="">\u2014 Select a class time \u2014</option>';
-                p.times.forEach((t, i) => {
-                    const slotKey = `${t.day}___${t.time}`;
-                    const dates = (data.availability || {})[slotKey] || [];
-                    const hasSpots = dates.some(d => d.spotsRemaining > 0);
-                    if (hasSpots) {
-                        const opt = document.createElement('option');
-                        opt.value = i;
-                        opt.textContent = `${t.day} at ${t.time}`;
-                        sel.appendChild(opt);
-                    }
-                });
-                if (sel.options.length === 1) {
-                    sel.innerHTML = '<option value="">No times available \u2014 check back soon</option>';
-                }
-                sel.disabled = false;
-                sel.style.display = '';
-                loader.style.display = 'none';
+                slotLoader.style.display = 'none';
+                renderGroupedSlots(p, data.availability || {});
             })
-            .catch(() => {
-                sel.innerHTML = '<option value="">\u2014 Select a class time \u2014</option>';
-                p.times.forEach((t, i) => {
-                    const opt = document.createElement('option');
-                    opt.value = i;
-                    opt.textContent = `${t.day} at ${t.time}`;
-                    sel.appendChild(opt);
-                });
-                sel.disabled = false;
-                sel.style.display = '';
-                loader.style.display = 'none';
+            .catch(err => {
+                console.error(err);
+                slotLoader.style.display = 'none';
+                slotGrid.innerHTML = '<div class="no-slots">Couldn\'t load classes \u2014 please refresh and try again.</div>';
             });
     }
 
@@ -1460,37 +1444,103 @@ function showResults() {
     setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 }
 
-// ==================== PROCEED: dropdown -> date selection ====================
-function proceedToBooking() {
-    const sel = document.getElementById('classTimeSelect');
-    if (!sel.value) {
-        sel.style.borderColor = '#d32f2f';
-        sel.focus();
-        setTimeout(() => sel.style.borderColor = '#e0e0e0', 2000);
+// ==================== GROUPED SLOT RENDERING ====================
+function renderGroupedSlots(program, availability) {
+    const slotGrid = document.getElementById('slotGrid');
+    // Build flat list of slots; only include slots in program.times so unknown sheet rows are ignored
+    const allSlots = [];
+    program.times.forEach(t => {
+        const key = `${t.day}___${t.time}`;
+        const dates = availability[key] || [];
+        dates.forEach(d => {
+            allSlots.push({
+                day: t.day,
+                time: t.time,
+                date: d.date,
+                dateFormatted: d.dateFormatted,
+                available: d.available !== false && d.spotsRemaining > 0,
+                spotsRemaining: d.spotsRemaining || 0
+            });
+        });
+    });
+
+    if (!allSlots.length) {
+        slotGrid.innerHTML = '<div class="no-slots">No classes scheduled yet — please check back soon.</div>';
         return;
     }
 
-    const idx = parseInt(sel.value);
-    selectedTimeSlot = selectedProgram.times[idx];
-    selectedDay = selectedTimeSlot.day;
-    selectedDate = null;
+    const dayOrder = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
+    const byDay = {};
+    allSlots.forEach(s => {
+        if (!byDay[s.day]) byDay[s.day] = [];
+        byDay[s.day].push(s);
+    });
+    Object.keys(byDay).forEach(day => {
+        byDay[day].sort((a, b) => (a.date.localeCompare(b.date)) || (a.time.localeCompare(b.time)));
+    });
 
-    document.getElementById('dateSubtext').textContent =
-        `Showing available ${selectedDay}s at ${selectedTimeSlot.time} for ${selectedProgram.shortName}`;
+    const html = dayOrder.filter(d => byDay[d] && byDay[d].length).map(day => {
+        const slots = byDay[day];
+        const openCount = slots.filter(s => s.available).length;
+        const slotsHtml = slots.map(s => {
+            const fullClass = s.available ? '' : ' full';
+            const lowClass = s.available && s.spotsRemaining <= 2 ? ' low' : '';
+            const onclick = s.available
+                ? `onclick="selectSlot('${escapeAttr(s.day)}','${escapeAttr(s.time)}','${escapeAttr(s.date)}')"`
+                : 'onclick="event.preventDefault()"';
+            const spotsLabel = s.available
+                ? (s.spotsRemaining + ' open')
+                : 'Full';
+            const dateShort = formatDateShort(s.date);
+            return `<button type="button" class="slot-row${fullClass}${lowClass}" ${onclick} ${s.available ? '' : 'aria-disabled="true"'}>
+                <span class="slot-date">${dateShort}</span>
+                <span class="slot-time">${s.time}</span>
+                <span class="slot-spots">${spotsLabel}</span>
+            </button>`;
+        }).join('');
+        return `<div class="slot-day-group">
+            <div class="slot-day-header"><span>${day}s</span><span class="slot-day-count">${openCount} open</span></div>
+            <div class="slot-row-list">${slotsHtml}</div>
+        </div>`;
+    }).join('');
 
-    loadDatesFromAPI();
+    slotGrid.innerHTML = html || '<div class="no-slots">No classes scheduled yet — please check back soon.</div>';
+}
+
+function escapeAttr(s) {
+    return String(s).replace(/'/g, "\\'");
+}
+
+function formatDateShort(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+// ==================== SLOT SELECTION (direct to form) ====================
+function selectSlot(day, time, dateIso) {
+    selectedTimeSlot = { day: day, time: time };
+    selectedDay = day;
+    selectedDate = dateIso;
+
+    document.getElementById('formProgram').value = selectedProgram.name;
+    document.getElementById('formTime').value = `${day} at ${time}`;
+    document.getElementById('formDate').value = dateIso;
+
+    document.getElementById('summaryProgram').textContent = selectedProgram.shortName;
+    document.getElementById('summaryTime').textContent = `${day}s at ${time}`;
+    document.getElementById('summaryDate').textContent = formatDateHuman(new Date(dateIso + 'T00:00:00'));
 
     const sec = document.getElementById('bookingSection');
     sec.classList.add('visible');
-    document.getElementById('stepDate').classList.add('visible');
-    document.getElementById('stepForm').classList.remove('visible');
+    document.getElementById('stepDate').classList.remove('visible');
+    document.getElementById('stepForm').classList.add('visible');
 
-    setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    setTimeout(() => document.getElementById('stepForm').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 }
 
 function goBackToResults() {
     document.getElementById('bookingSection').classList.remove('visible');
-    document.getElementById('stepDate').classList.remove('visible');
+    document.getElementById('stepForm').classList.remove('visible');
     document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
